@@ -5,14 +5,14 @@ import java.util.Set;
 public class Main {
     public static void main(String[] args) {
         Grammar grammar = new Grammar();
-        grammar.readGrammarFromFile("src/g1err.txt");
+        grammar.readGrammarFromFile("src/g2.txt");
         showMenu();
 
         Scanner scanner = new Scanner(System.in);
-        int opt = -1; // Initialize opt to a default value
+        int opt = -1;
         while (opt != 0) {
             try {
-                opt = scanner.nextInt(); // Attempt to read an integer
+                opt = scanner.nextInt();
                 switch (opt) {
                     case 1:
                         grammar.printNonterminals();
@@ -39,7 +39,7 @@ public class Main {
                 }
             } catch (InputMismatchException e) {
                 System.out.println("Invalid input. Please enter a valid option.");
-                scanner.next(); // Consume the invalid input to prevent an infinite loop
+                scanner.next();
             }
 
             System.out.println();

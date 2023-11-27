@@ -1,0 +1,32 @@
+program cmpdstmt declaration_list declaration type identifier_list stmt_list stmt read_stmt write_stmt if_stmt for_stmt range_exp while_stmt assignment_stmt condition operator expression term factor identifier letter digit underline noconst start_digit stringconst no char
+A B C D E F G H I J K L M N O P Q R S T U V W X Y Z a b c d e f g h i j k l m n o p q r s t u v w x y z \n 0 1 2 3 4 5 6 7 8 9 + - * / % < > <= >= = and or is [ ] ( ) { } : ; , ' " @ integer string if else read write for in range while
+program
+program -> @ cmpdstmt @
+cmpdstmt -> declaration_list stmt_list
+declaration_list -> declaration | declaration declaration_list
+declaration -> type identifier_list ; | type assignment_stmt ;
+type -> integer | string
+identifier_list -> identifier | identifier [ noconst ] | identifier , identifier_list
+stmt_list -> stmt | stmt stmt_list
+stmt -> read_stmt | write_stmt | if_stmt | for_stmt | while_stmt | assignment_stmt
+read_stmt -> read ( identifier_list ) ;
+write_stmt -> write ( identifier_list | identifier_list ' stringconst ' | ' stringconst ' ) ;
+if_stmt -> if condition : { stmt_list } else : { stmt_list } | if condition : { stmt_list }
+for_stmt -> for identifier in range range_exp : { stmt_list }
+range_exp -> ( expression , expression ) | ( expression , expression , no )
+while_stmt -> while condition : { stmt_list }
+assignment_stmt -> identifier = expression ;
+condition -> expression operator expression | condition operator condition
+operator -> < | <= | > | >= | = | is | and | or
+expression -> term | expression + term | expression - term
+term -> factor | term * factor | term / factor | term % factor
+factor -> identifier_list | noconst | ' stringconst ' | ( expression )
+identifier -> letter | identifier underline identifier | identifier letter | identifier digit
+letter -> A | B | C | D | E | F | G | H | I | J | K | L | M | N | O | P | Q | R | S | T | U | V | W | X | Y | Z | a | b | c | d | e | f | g | h | i | j | k | l | m | n | o | p | q | r | s | t | u | v | w | x | y | z
+digit -> 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
+underline -> _
+noconst -> + no | - no | no
+no -> start_digit no | digit
+start_digit -> 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
+stringconst -> char | char string
+char -> letter | digit
