@@ -4,7 +4,6 @@ import java.util.*;
 
 public class Grammar {
     private Set<String> nonterminals, terminals;
-
     private final Map<String, Set<String>> productions;
     private String initialState;
     public static final String EPSILON = "epsilon";
@@ -76,6 +75,7 @@ public class Grammar {
                 for (String production : productionSymbols) {
                     production = production.trim();
                     productions.computeIfAbsent(nonterminal, k -> new HashSet<>()).add(production);
+
                     String[] symbols = production.split(" ");
                     for (String symbol : symbols) {
                         if (!nonterminals.contains(symbol) && !symbol.equals(EPSILON)) {
@@ -114,25 +114,34 @@ public class Grammar {
 
         return productions.getOrDefault(nonterminal, Collections.emptySet());
     }
+
+
     public boolean checkIfCFG() {
         if (!this.nonterminals.contains(this.initialState)) {
             return false;
         }
-    
+
         for (Map.Entry<String, Set<String>> entry : this.productions.entrySet()) {
             String leftHandSide = entry.getKey();
             Set<String> productions = entry.getValue();
-    
+
             String[] nonterminalsOnLeft = leftHandSide.split(" ");
-    
-            for (String nonterminal : nonterminalsOnLeft) {
-                if (nonterminal.length() > 1 && !nonterminal.equals(this.initialState)) {
-                    System.out.println("Invalid nonterminal in left hand side: " + nonterminal);
-                    return false;
-                }
+
+            // Check if there is exactly one nonterminal on the left-hand side
+            if (nonterminalsOnLeft.length != 1) {
+                System.out.println("Invalid number of nonterminals on left-hand side: " + leftHandSide);
+                return false;
             }
-    
+
+            String nonterminal = nonterminalsOnLeft[0];
+
+            if (!this.nonterminals.contains(nonterminal)) {
+                System.out.println("Invalid nonterminal in left-hand side: " + nonterminal);
+                return false;
+            }
+
             for (String production : productions) {
+                // Check each symbol in the production
                 String[] symbols = production.split(" ");
                 for (String symbol : symbols) {
                     if (!this.nonterminals.contains(symbol) && !this.terminals.contains(symbol) && !symbol.equals(EPSILON)) {
@@ -142,7 +151,7 @@ public class Grammar {
                 }
             }
         }
-    
+
         return true;
     }
 }
