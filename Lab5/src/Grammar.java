@@ -76,8 +76,6 @@ public class Grammar {
                 for (String production : productionSymbols) {
                     production = production.trim();
                     productions.computeIfAbsent(nonterminal, k -> new HashSet<>()).add(production);
-
-                    // Updated loop to handle space-separated symbols
                     String[] symbols = production.split(" ");
                     for (String symbol : symbols) {
                         if (!nonterminals.contains(symbol) && !symbol.equals(EPSILON)) {
@@ -116,24 +114,25 @@ public class Grammar {
 
         return productions.getOrDefault(nonterminal, Collections.emptySet());
     }
-
-
     public boolean checkIfCFG() {
         if (!this.nonterminals.contains(this.initialState)) {
             return false;
         }
-
+    
         for (Map.Entry<String, Set<String>> entry : this.productions.entrySet()) {
             String leftHandSide = entry.getKey();
             Set<String> productions = entry.getValue();
-
-            if (leftHandSide.length() != 1 || !this.nonterminals.contains(leftHandSide)) {
-                System.out.println("Invalid left hand side: " + leftHandSide);
-                return false;
+    
+            String[] nonterminalsOnLeft = leftHandSide.split(" ");
+    
+            for (String nonterminal : nonterminalsOnLeft) {
+                if (nonterminal.length() > 1 && !nonterminal.equals(this.initialState)) {
+                    System.out.println("Invalid nonterminal in left hand side: " + nonterminal);
+                    return false;
+                }
             }
-
+    
             for (String production : productions) {
-                // Check each symbol in the production
                 String[] symbols = production.split(" ");
                 for (String symbol : symbols) {
                     if (!this.nonterminals.contains(symbol) && !this.terminals.contains(symbol) && !symbol.equals(EPSILON)) {
@@ -143,7 +142,7 @@ public class Grammar {
                 }
             }
         }
-
+    
         return true;
     }
 }
