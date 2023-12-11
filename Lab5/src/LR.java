@@ -42,7 +42,11 @@ public class LR {
         }
     }
 
+    //whenever we have a nonterminal after the dot, we add the productions for that nonterminal to the closure
+    //we do this until we have no more nonterminals after the dot
+    //
 public State closure(Item item) {
+
     Set<Item> closureItems = new LinkedHashSet<>(Set.of(item));
 
     boolean updated;
@@ -74,7 +78,9 @@ public State closure(Item item) {
     return new State(closureItems);
 }
 
+//we go through all the items in the state and we look for the nonterminal after the dot
 public State goTo(State state, String symbol) {
+    System.out.println("------we are performing goTo on state: " + state + " and symbol:"+symbol);
     Set<Item> goToItems = new LinkedHashSet<>();
 
     for (Item item : state.getItems()) {
@@ -91,7 +97,6 @@ public State goTo(State state, String symbol) {
     public CanonicalCollection canonicalCollection() {
         System.out.println("Enhanced grammar: " + enhancedGrammar.getProductions());
         CanonicalCollection canonicalCollection = new CanonicalCollection();
-        int stateNumber = 0;
 
         Set<String> initialProductions = enhancedGrammar.productionsForNonterminal(enhancedGrammar.getInitialState());
         List<String> initialProductionsList = new ArrayList<>(initialProductions);

@@ -111,7 +111,6 @@ public class Grammar {
     }
 
     public Set<String> productionsForNonterminal(String nonterminal) {
-        System.out.println("nonterminal is: " + nonterminal);
         if (!nonterminals.contains(nonterminal)) {
             return Collections.emptySet();
         }

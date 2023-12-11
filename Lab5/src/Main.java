@@ -65,7 +65,6 @@ public class Main {
 
     private static void printProductionsForNonterminal(Grammar grammar, String nonterminal) {
         Set<String> productions = grammar.productionsForNonterminal(nonterminal);
-        System.out.println("productions are: " + productions);
         if(productions.isEmpty()) {
             System.out.println("No productions found for nonterminal: " + nonterminal);
             return;
