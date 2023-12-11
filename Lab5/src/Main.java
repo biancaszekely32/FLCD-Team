@@ -5,7 +5,7 @@ import java.util.Set;
 public class Main {
     public static void main(String[] args) {
         Grammar grammar = new Grammar();
-        grammar.readGrammarFromFile("src/g2.txt");
+        grammar.readGrammarFromFile("Lab5/src/ga.txt");
         showMenu();
 
         Scanner scanner = new Scanner(System.in);
@@ -33,6 +33,10 @@ public class Main {
                         System.out.println("Check if CFG: ");
                         System.out.println(grammar.checkIfCFG());
                         break;
+                    case 6:
+                        LR lrAlg = new LR(grammar);
+                        System.out.println(lrAlg.canonicalCollection().getStates());
+                        break;
                     default:
                         System.out.println("Invalid option");
                         break;
@@ -54,12 +58,14 @@ public class Main {
         System.out.println("3. The productions: ");
         System.out.println("4. Productions for a given nonterminal: ");
         System.out.println("5. Check if CFG: ");
+        System.out.println("6. LR Algorithm: ");
         System.out.println("0. Exit");
         System.out.println("\nEnter option:");
     }
 
     private static void printProductionsForNonterminal(Grammar grammar, String nonterminal) {
         Set<String> productions = grammar.productionsForNonterminal(nonterminal);
+        System.out.println("productions are: " + productions);
         if(productions.isEmpty()) {
             System.out.println("No productions found for nonterminal: " + nonterminal);
             return;

@@ -5,8 +5,10 @@ import java.util.*;
 public class Grammar {
     private Set<String> nonterminals, terminals;
     private final Map<String, Set<String>> productions;
-    private String initialState;
+    String initialState;
     public static final String EPSILON = "epsilon";
+
+
 
     public Grammar() {
         this.nonterminals = new HashSet<>();
@@ -14,6 +16,7 @@ public class Grammar {
         this.productions = new HashMap<>();
         this.initialState = "";
     }
+
 
     public Set<String> getNonterminals() {
         return nonterminals;
@@ -108,6 +111,7 @@ public class Grammar {
     }
 
     public Set<String> productionsForNonterminal(String nonterminal) {
+        System.out.println("nonterminal is: " + nonterminal);
         if (!nonterminals.contains(nonterminal)) {
             return Collections.emptySet();
         }
