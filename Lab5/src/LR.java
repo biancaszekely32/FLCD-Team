@@ -12,22 +12,22 @@ public class LR {
     }
 
     public Grammar enhanceGrammar() {
-        Grammar enrichedGrammar = new Grammar();
+        Grammar enhancedGrammar = new Grammar();
 
         String newStartSymbol = "S'";
-        enrichedGrammar.getNonterminals().add(newStartSymbol);
+        enhancedGrammar.getNonterminals().add(newStartSymbol);
 
         Set<String> newStartProductions = new HashSet<>();
         newStartProductions.add(grammar.getInitialState());
-        enrichedGrammar.getProductions().put(newStartSymbol, newStartProductions);
+        enhancedGrammar.getProductions().put(newStartSymbol, newStartProductions);
 
-        enrichedGrammar.getNonterminals().addAll(grammar.getNonterminals());
-        enrichedGrammar.getTerminals().addAll(grammar.getTerminals());
-        enrichedGrammar.getProductions().putAll(grammar.getProductions());
+        enhancedGrammar.getNonterminals().addAll(grammar.getNonterminals());
+        enhancedGrammar.getTerminals().addAll(grammar.getTerminals());
+        enhancedGrammar.getProductions().putAll(grammar.getProductions());
 
-        enrichedGrammar.initialState = newStartSymbol;
+        enhancedGrammar.initialState = newStartSymbol;
 
-        return enrichedGrammar;
+        return enhancedGrammar;
     }
 
     public String getNonterminalAfterDot(Item item) {
