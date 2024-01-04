@@ -61,9 +61,10 @@ public State closure(Item item) {
             if (nonTerminal != null) {
                 for (String production : grammar.productionsForNonterminal(nonTerminal)) {
                     Item newItem = new Item(nonTerminal, Arrays.asList(production.trim().split(" ")), 0);
-                    System.out.println(newItem);
-
+                    System.out.println("new item is " + newItem);
+                    //if we add a new item, we set updated to true; if it already exists we don't add it
                     if (closureItems.add(newItem)) {
+                        System.out.println("-----added item " + newItem);
                         itemsToAdd.add(newItem);
                         updated = true;
                     }
@@ -78,7 +79,7 @@ public State closure(Item item) {
     return new State(closureItems);
 }
 
-//we go through all the items in the state and we look for the nonterminal after the dot
+//we go through all the items in the state, and we look for the nonterminal after the dot
 public State goTo(State state, String symbol) {
     System.out.println("------we are performing goTo on state: " + state + " and symbol:"+symbol);
     Set<Item> goToItems = new LinkedHashSet<>();
