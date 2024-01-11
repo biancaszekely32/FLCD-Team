@@ -1,0 +1,16 @@
+@
+integer size,i,x;
+integer sum=0;
+integer arr[];
+read(size);
+for i in range(0,size):
+{
+read(x);
+arr[i]=x;
+}
+for i in range(0,size):
+{
+sum=sum + arr[i];
+}
+write('Sum of' size 'numbers is' sum);
+@

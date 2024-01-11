@@ -13,7 +13,7 @@ public class Grammar {
     public Grammar() {
         this.nonterminals = new HashSet<>();
         this.terminals = new HashSet<>();
-        this.productions = new HashMap<>();
+        this.productions = new LinkedHashMap<>();
         this.initialState = "";
     }
 
@@ -116,6 +116,20 @@ public class Grammar {
         }
 
         return productions.getOrDefault(nonterminal, Collections.emptySet());
+    }
+
+    public List<Pair<String,List<String>>> getOrderedProductions(){
+        List<Pair<String, List<String>>> orderedProductions = new ArrayList<>();
+        for (Map.Entry<String, Set<String>> entry : this.productions.entrySet()) {
+            String leftHandSide = entry.getKey();
+            Set<String> productions = entry.getValue();
+
+            for (String production : productions) {
+                orderedProductions.add(new Pair<>(leftHandSide, Arrays.asList(production.split(" "))));
+            }
+        }
+
+        return orderedProductions;
     }
 
 
