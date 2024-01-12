@@ -1,0 +1,88 @@
+@startuml
+
+class Grammar {
+  - nonterminals: Set<String>
+  - terminals: Set<String>
+  - productions: Map<String, Set<String>>
+  - initialState: String
+  - EPSILON: String
+  + getNonterminals(): Set<String>
+  + getTerminals(): Set<String>
+  + getProductions(): Map<String, Set<String>>
+  + getInitialState(): String
+  + readGrammarFromFile(filename: String): void
+  + printNonterminals(): void
+  + printTerminals(): void
+  + printProductions(): void
+  + productionsForNonterminal(nonterminal: String): Set<String>
+  + checkIfCFG(): boolean
+}
+
+class LR {
+  - grammar: Grammar
+  - enhancedGrammar: Grammar
+  + LR(grammar: Grammar)
+  + enhanceGrammar(): Grammar
+  + getNonterminalAfterDot(item: Item): String
+  + closure(item: Item): State
+  + goTo(state: State, symbol: String): State
+  + canonicalCollection(): CanonicalCollection
+  + getGrammar(): Grammar
+  + getEnhancedGrammar(): Grammar
+}
+
+class State {
+  - items: Set<Item>
+  + State(items: Set<Item>)
+  + getItems(): Set<Item>
+  + toString(): String
+  + getSymbolsAfterTheDot(): Set<String>
+}
+
+class CanonicalCollection {
+  - states: List<State>
+  + CanonicalCollection()
+  + addState(state: State): void
+  + getStates(): List<State>
+}
+
+class Item {
+  - lhs: String
+  - rhs: List<String>
+  - dotPosition: Integer
+  + Item(lhs: String, rhs: List<String>, dotPos: Integer)
+  + getLhs(): String
+  + getRhs(): List<String>
+  + getDotPosition(): Integer
+  + toString(): String
+}
+
+class Pair<T1, T2> {
+  - first: T1
+  - second: T2
+  + Pair(first: T1, second: T2)
+  + getFirst(): T1
+  + getSecond(): T2
+  + equals(obj: Object): boolean
+  + hashCode(): int
+  + toString(): String
+}
+
+class Main {
+  + main(args: String[]): void
+  + showMenu(): void
+  + printProductionsForNonterminal(grammar: Grammar, nonterminal: String): void
+}
+
+Main --> Grammar
+Main --> LR
+LR --> Grammar
+LR --> CanonicalCollection
+LR --> State
+LR --> Item
+CanonicalCollection --> State
+CanonicalCollection --> Pair
+State --> Item
+
+
+@enduml

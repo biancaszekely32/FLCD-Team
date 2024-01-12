@@ -4,10 +4,13 @@ import java.util.Set;
 
 public class State {
 
+
+    private StateActionType stateActionType;
     private Set<Item> items;
 
     public State(Set<Item> items) {
         this.items = items;
+        this.setActionForState();
     }
 
     public Set<Item> getItems() {
@@ -16,7 +19,7 @@ public class State {
 
     @Override
     public String toString() {
-        return items.toString();
+        return  stateActionType +  "->" + items.toString();
     }
 
     public Set<String> getSymbolsAfterTheDot() {
@@ -41,5 +44,25 @@ public class State {
         if (obj == null || getClass() != obj.getClass()) return false;
         State state = (State) obj;
         return Objects.equals(items, state.items);
+    }
+
+    public StateActionType getStateActionType(){
+        return this.stateActionType;
+    }
+
+
+    public void setActionForState(){
+        if(items.size() == 1 && ((Item)items.toArray()[0]).getRhs().size() == ((Item)items.toArray()[0]).getDotPosition() && ((Item)this.items.toArray()[0]).getLhs() == "S'"){
+            this.stateActionType = StateActionType.ACCEPT;
+        } else if(items.size() == 1 && ((Item) items.toArray()[0]).getRhs().size() == ((Item) items.toArray()[0]).getDotPosition())
+        {
+            this.stateActionType = StateActionType.REDUCE;
+        } else if(items.size() >= 1 && this.items.stream().allMatch(i -> i.getRhs().size() > i.getDotPosition())){
+            this.stateActionType = StateActionType.SHIFT;
+        } else if(items.size() > 1 && this.items.stream().allMatch(i -> i.getRhs().size() == i.getDotPosition())){
+            this.stateActionType = StateActionType.REDUCE_REDUCE_CONFLICT;
+        } else {
+            this.stateActionType = StateActionType.SHIFT_REDUCE_CONFLICT;
+        }
     }
 }

@@ -1,0 +1,39 @@
+States
+0 SHIFT->[S'->.S, S->.aA]
+1 SHIFT->[S->a.A, A->.bA, A->.c]
+2 ACCEPT->[S'->S.]
+3 REDUCE->[S->aA.]
+4 SHIFT->[A->b.A, A->.bA, A->.c]
+5 REDUCE->[A->c.]
+6 REDUCE->[A->bA.]
+Transitions
+(0, a) -> 1
+(0, S) -> 2
+(1, A) -> 3
+(1, b) -> 4
+(1, c) -> 5
+(4, A) -> 6
+(4, b) -> 4
+(4, c) -> 5
+
+Parsing Table: 
+Row: stateIndex= 0, action='SHIFT', reduceLhs='null', reduceRhs = null, shifts = [(a, 1), (S, 2)]
+Row: stateIndex= 1, action='SHIFT', reduceLhs='null', reduceRhs = null, shifts = [(A, 3), (b, 4), (c, 5)]
+Row: stateIndex= 2, action='ACCEPT', reduceLhs='null', reduceRhs = null, shifts = null
+Row: stateIndex= 3, action='REDUCE', reduceLhs='S', reduceRhs = [a, A], shifts = null
+Row: stateIndex= 4, action='SHIFT', reduceLhs='null', reduceRhs = null, shifts = [(A, 6), (b, 4), (c, 5)]
+Row: stateIndex= 5, action='REDUCE', reduceLhs='A', reduceRhs = [c], shifts = null
+Row: stateIndex= 6, action='REDUCE', reduceLhs='A', reduceRhs = [b, A], shifts = null
+
+ACCEPTED
+Production strings: [S -> [a, A], A -> [b, A], A -> [b, A], A -> [c]]
+Production number: [0, 1, 1, 2]
+The output tree: 
+Row: index = 0, info = S, child = 1, sibling = -1, father = -1, level = 0
+Row: index = 1, info = a, child = -1, sibling = 2, father = 0, level = 1
+Row: index = 2, info = A, child = 3, sibling = -1, father = 0, level = 1
+Row: index = 3, info = b, child = -1, sibling = 4, father = 2, level = 2
+Row: index = 4, info = A, child = 5, sibling = -1, father = 2, level = 2
+Row: index = 5, info = b, child = -1, sibling = 6, father = 4, level = 3
+Row: index = 6, info = A, child = 7, sibling = -1, father = 4, level = 3
+Row: index = 7, info = c, child = -1, sibling = -1, father = 6, level = 4
